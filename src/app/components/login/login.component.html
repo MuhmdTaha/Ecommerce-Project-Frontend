@@ -1,1 +1,37 @@
-<p>login works!</p>
+<body>
+    <form [formGroup]="loginForm" (ngSubmit)="onClickLoginSubmit()" class="form-signin card mb-4 box-shadow">
+        <h1 class="h4 mb-3 font-weight-normal card-header bg-danger text-light">Sign In</h1>
+        <div class="card-body">
+
+            <label for="inputEmail">Email</label>
+            <input [class.is-invalid] = "email.invalid && email.touched"
+            type="email" id="inputEmail" formControlName="email" class="form-control" placeholder="Email address" autofocus>
+            <div *ngIf="(email.invalid && email.touched) || email.dirty">
+                <small *ngIf="email.errors?.required" class="text-danger">Email is required</small>
+                <small *ngIf="email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+            </div>
+
+            <label for="inputPassword">Password</label>
+            <input [class.is-invalid] = "password.invalid && password.touched"
+            type="password" id="inputPassword" formControlName="password" class="form-control" placeholder="Password">
+            <div *ngIf="(password.invalid && password.touched) || password.dirty">
+                <small *ngIf="password.errors?.required" class="text-danger">Password is required</small>
+            </div>
+
+            <!-- <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="true" formControlName="remember"> Remember me
+                </label>
+            </div> -->
+            <div *ngIf="invalidLogin" class="alert alert-danger">  
+                Invalid username and/or password.  
+                </div>  
+            <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+        </div>
+        <div class="card-footer text-muted">
+            New Customer?
+            <a [routerLinkActiveOptions]='{exact:true}' routerLinkActive='active' routerLink="../register"> Create Your
+                Account</a>
+        </div>
+    </form>
+</body>
