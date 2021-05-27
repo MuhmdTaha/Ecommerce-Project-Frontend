@@ -1,1 +1,108 @@
-<p>add works!</p>
+<div class="container">
+    <div class="row py-5">
+        <div class="offset-1 col-md-10 order-md-1">
+            <h4 class="mb-3">Add Product</h4>
+            <hr class="mb-4">
+
+            <form [formGroup]="AddProductForm" (ngSubmit)="onClickAddProductSubmit()">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="inputTitle">Title</label>
+                        <input [class.is-invalid]="title.invalid && title.touched" type="text" class="form-control"
+                            id="inputTitle" formControlName="title" required>
+                        <div *ngIf="(title.invalid && title.touched) || title.dirty">
+                            <small *ngIf="title.errors?.required" class="text-danger">Title is required</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="inputPrice">Price</label>
+                        <input [class.is-invalid]="price.invalid && price.touched" type="number" class="form-control"
+                            id="inputPrice" formControlName="price" required>
+                        <div *ngIf="(price.invalid && price.touched) || price.dirty">
+                            <small *ngIf="price.errors?.required" class="text-danger">Price is required</small>
+                            <small *ngIf="price.errors?.pattern" class="text-danger">Please provide a valid
+                                price</small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="inputQuantity">Quantity</label>
+                        <input [class.is-invalid]="quantity.invalid && quantity.touched" type="number"
+                            class="form-control" id="inputQuantity" required formControlName="quantity">
+                        <div *ngIf="(quantity.invalid && quantity.touched) || quantity.dirty">
+                            <small *ngIf="quantity.errors?.required" class="text-danger">Quantity is required</small>
+                            <small *ngIf="quantity.errors?.pattern" class="text-danger">Please provide a valid
+                                quantity</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="inputRatioOfPromotion">Promotion</label>
+                        <input [class.is-invalid]="promotion.invalid && promotion.touched" type="number" class="form-control" id="inputRatioOfPromotion"
+                            formControlName="ratioOfPromotion" required>
+                        <div *ngIf="(promotion.invalid && promotion.touched) || promotion.dirty">
+                            <small *ngIf="promotion.errors?.required" class="text-danger">Promotion is required</small>
+                            <small *ngIf="promotion.errors?.pattern" class="text-danger">Please provide a valid
+                                promotion percentage between 0 and 1</small>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="inputImage">Images</label>
+
+                    <div class="custom-file">
+                        <input type="file" id="inputImage" accept="image/*" class="custom-file-input" id="validatedCustomFile" name="images"
+                            lang="es" (change)="uploadFiles($event.target.files)" multiple>
+
+                        <label class="custom-file-label" for="validatedCustomFile">{{fileName}}</label>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div formGroupName="details">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="inputBrand">Brand</label>
+                            <input type="text" class="form-control" id="inputBrand" formControlName="Brand">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="inputProcessor">Processor</label>
+                            <input type="text" class="form-control" id="inputProcessor"
+                                formControlName="Processor">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="inputRam">Ram</label>
+                            <input type="text" class="form-control" id="inputRam" formControlName="RAM">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="inputHardDisk">Hard Disk</label>
+                            <input type="text" class="form-control" id="inputHardDisk"
+                                formControlName="HardDisk">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="inputGraphicsCard">Graphics Card</label>
+                            <input type="text" class="form-control" id="inputGraphicsCard"
+                                formControlName="GPU">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="inputColor">Color</label>
+                            <input type="text" class="form-control" id="inputColor" formControlName="Color">
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
