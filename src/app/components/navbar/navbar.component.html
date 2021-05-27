@@ -1,1 +1,238 @@
-<p>navbar works!</p>
+<nav *ngIf="navService.visible" class="navbar-top navbar navbar-expand navbar-dark bg-dark">
+  <div class="navbar-nav ml-auto">
+    <a
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="active"
+      routerLink="about"
+      class="nav-item nav-link"
+      >About</a>
+    <a href="#" class="nav-item nav-link">
+      <fa-icon [icon]="faGlobe"></fa-icon>
+    </a>
+  </div>
+</nav>
+
+<nav *ngIf="navService.visible"class="navbar-middle navbar navbar-expand-md navbar-light bg-light sticky-top navbar-toggleable-md">
+  <a
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="active"
+    routerLink="home"
+    class="navbar-brand"
+  >
+    <img src="https://www.pngkit.com/png/full/251-2510600_shopping-cart-ecommerce-mobile-laptop-comments-logo-repair.png" height="32"  alt="CompYou"/>
+  </a>
+  <button
+    type="button"
+    class="navbar-toggler"
+    (click)="isCollapsed = !isCollapsed"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+    <form class="form-inline">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="What are you looking for?"
+          [(ngModel)]="search"
+          name="search"
+          (keyup.enter)="searchByTitle(search)"
+        />
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="searchByTitle(search)"
+          >
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="navbar-nav ml-auto">
+      <a
+        *ngIf="usersService.isLoggedIn()"
+        class="d-md-none"
+        class="nav-item nav-link"
+        (click)="getAllProducts()"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="../products"
+      >
+        <fa-icon class="d-md-none" [icon]="faShoppingBag"></fa-icon>
+        <span class="d-md-none"> All Laptops</span>
+      </a>
+
+      <a
+        *ngIf="usersService.isLoggedIn()"
+        href="#"
+        class="nav-item nav-link disabled d-none d-md-inline-block"
+        >Hello, {{ usersService.currentUser.userName }}!</a
+      >
+
+      <a
+        *ngIf="usersService.isLoggedIn() && !usersService.currentUser.isAdmin"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="profile/{{ usersService.currentUser.id }}"
+        class="nav-item nav-link"
+      >
+        <fa-icon [icon]="faUser"></fa-icon>
+        <span class="d-md-none"> {{ usersService.currentUser.userName }}</span>
+      </a>
+      <a
+        *ngIf="usersService.isLoggedIn() && !usersService.currentUser.isAdmin"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="cart/{{ usersService.currentUser.id }}"
+        class="nav-item nav-link"
+      >
+        <fa-icon [icon]="faShoppingCart"></fa-icon>
+        <span class="d-md-none"> Cart</span>
+      </a>
+      <a
+        *ngIf="usersService.isLoggedIn() && usersService.currentUser.isAdmin"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="orders"
+        class="nav-item nav-link"
+      >
+        <fa-icon [icon]="faClipboardList"></fa-icon>
+        <span class="d-md-none"> Orders</span>
+      </a>
+      <!-- 1.b end -->
+
+      <a
+        *ngIf="usersService.isLoggedIn()"
+        (click)="onClickLogout()"
+        class="nav-item nav-link"
+        routerLink="home"
+      >
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        <span class="d-md-none"> Log Out</span>
+      </a>
+      <!-- 1. end -->
+
+      <!-- 2 TODO: only show if not logged in -->
+      <a
+        *ngIf="!usersService.isLoggedIn()"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="login"
+        class="nav-item nav-link"
+        >Login</a
+      >
+      <a
+        *ngIf="!usersService.isLoggedIn()"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="register"
+        class="nav-item nav-link"
+        >Register</a
+      >
+      <!-- 2 end -->
+    </div>
+  </div>
+</nav>
+
+<!-- 3 TODO: only show if logged in -->
+<nav *ngIf="navService.visible" class="navbar-bottom navbar navbar-expand-md d-md-block d-none navbar-dark bg-danger justify-content-center">
+  <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsingNavbar2">
+    <ul class="navbar-nav mx-auto text-center">
+     <a
+        class="nav-link parent-nav-link"
+        routerLink="../products"
+        (click)="getAllProducts()"
+        >All Laptops</a
+      >
+      <!-- (click)="SearchOnAllLaptop()" -->
+
+      <div class="dropdown d-inline-block">
+        <a class="nav-link dropbtn parent-nav-link"
+          >Brand <fa-icon [icon]="faAngleDown"></fa-icon
+        ></a>
+        <div class="dropdown-content bg-danger">
+          <div class="row2">
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByBrand('HP')"
+              >HP</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnHPLaptop()" -->
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByBrand('Lenovo')"
+              >Lenovo</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnLenovoLaptop()" -->
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByBrand('Dell')"
+              >Dell</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnDellLaptop()" -->
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown d-inline-block">
+        <a class="nav-link dropbtn parent-nav-link"
+          >Processor <fa-icon [icon]="faAngleDown"></fa-icon
+        ></a>
+        <div class="dropdown-content bg-danger ">
+          <div class="row2">
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByProcessor('Core i3')"
+              >Core i3</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnLaptopCore_i3()" -->
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByProcessor('Core i5')"
+              >Core i5</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnLaptopCore_i5()" -->
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByProcessor('Core i7')"
+              >Core i7</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnLaptopCore_i7()" -->
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="searchByProcessor('Core i9')"
+              >Core i9</a
+            >
+            <!-- routerLink="../products"
+              (click)="SearchOnLaptopCore_i9()" -->
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+</nav>
+<!-- 3 end -->
