@@ -21,7 +21,7 @@ export class AboutComponent implements OnInit {
   team = [
     {
       id: 1,
-      Name: 'AlyEbrahim',
+      Name: 'Ali Ibrahim',
       Track: 'Open Source Applications',
       Organization: 'ITI Mansoura Branch',
       Image: 'https://localhost:4001/AlyEbrahim.jpg',
