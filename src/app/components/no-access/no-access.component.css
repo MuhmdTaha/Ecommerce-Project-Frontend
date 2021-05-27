@@ -1,0 +1,25 @@
+.ftr-content{
+    position: relative;
+    margin: 45px auto;
+    width: 84%;
+    max-width: 1180px;
+}
+
+.ftr-details{
+    text-align: center;
+    font-size: 2rem;
+}
+
+.ftr-small{
+    font-size: small;
+    line-height: 1.5rem;
+}
+
+.container{
+    /* background-color: #007bff; */
+    margin-top: 10rem;
+    color: #343a40;
+}
+#icon{
+    /* color: #007bff; */
+}
