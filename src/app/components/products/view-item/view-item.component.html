@@ -1,1 +1,107 @@
-<p>view-item works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="card pr-0 pl-0 col-12 col-lg-8 box-shadow">
+      <h2 class="card-title card-header bg-white">{{ product.title }}</h2>
+      <div class="card-body m-1 row">
+        <div class="col-sm-6 m-2 vertical-center">
+          <ngb-carousel *ngIf="product.images" id="carouselExampleIndicators">
+            <ng-template ngbSlide *ngFor="let img of product.images">
+              <div class="picsum-img-wrapper">
+                <img [src]="img" />
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+        <ul class="card-text ml-4 mt-3 col-sm-5">
+          <li *ngFor="let key of GetKeys(product.details)">
+            <b>{{ key }}:</b> {{ product.details[key] }}
+          </li>
+        </ul>
+        </div>
+        <div class="card-footer" *ngIf="usersService.isLoggedIn() && usersService.currentUser.isAdmin">
+          <div class="btn-group mt-3 mb-3 w-100"  role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                data-target="#DeleteModal">Delete</button>
+            <button type="button" class="btn btn-outline-primary"
+                (click)="Update(product)">Update</button>
+        </div>
+        </div>
+      </div>
+      <div class="m-3 d-none d-md-inline"></div>
+      <div class="card col-12 col-lg-3 box-shadow">
+        <div class="card-body m-1 row justify-content-center">
+          <div class="row justify-content-md-center">
+            <div class="col col-lg-12 justify-content-center">
+              <h5 style="font-size: larger;" *ngIf="product.ratioOfPromotion">
+                {{product.price - product.price * product.ratioOfPromotion}} EGP
+              </h5>
+              <h5 style="font-size: larger;" [ngStyle]="{'text-decoration': (product.ratioOfPromotion) ? 'line-through' : 'none'}"
+                [ngClass]="{'text-danger': product.ratioOfPromotion}">
+                {{ product.price }} EGP
+              </h5>
+            </div>
+          </div>
+
+          <div class="col col-lg-12">
+            <div class="form-group">
+              <label><b>Left In Store:</b></label>
+              <input class="form-control" type="number" value={{product.quantity}} disabled/>
+            </div>
+            <div class="form-group" *ngIf="product.quantity!=0 && !usersService.currentUser.isAdmin">
+            <label ><b>Quantity:</b></label>
+            <input class="form-control" type="number" min="1" max="100" required [(ngModel)]="qtyInput"/>
+            </div>
+          </div>
+          <div class="col col-lg-12">
+
+            <!-- routerLink="../../../cart/{{id}}" -->
+            <button type="button" id="addToCart" class="btn btn-primary w-100" (click)="addToCartHandler(product, qtyInput)" *ngIf="product.quantity!=0 && usersService.isLoggedIn() && !usersService.currentUser.isAdmin" data-toggle="modal" data-target="#exampleModalCenter"> 
+              Add To Cart
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete item</h5>
+                <button type="button" class="close" data-dismiss="modal" 
+                aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="Delete(product._id)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add To Cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <b>{{product.title}}</b> with quantity <b>{{qtyInput}}</b> is added to cart successfully!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
