@@ -1,1 +1,50 @@
-<p>edituser works!</p>
+<!-- {{user.userName}} -->
+<form [formGroup]="updateInfoForm" (ngSubmit)="onClickUpdateInfoSubmit()">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit Info</h4>
+        <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input [class.is-invalid] = "userName.invalid && userName.touched"
+            type="text" id="inputUsername" formControlName="userName" class="form-control">
+            <div *ngIf="(userName.invalid && userName.touched) || userName.dirty">
+                <small *ngIf="userName.errors?.required" class="text-danger">Username is required</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input [class.is-invalid] = "email.invalid && email.touched"
+            type="email" id="inputEmail" formControlName="email" class="form-control" >
+            <div *ngIf="(email.invalid && email.touched) || email.dirty">
+                <small *ngIf="email.errors?.required" class="text-danger">Email is required</small>
+                <small *ngIf="email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input
+            type="password" id="inputPassword" formControlName="password" class="form-control" >
+        </div>
+        <div class="form-group">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="Male" value="male" formControlName="gender" checked>
+                <label class="custom-control-label" for="Male">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="Female" value="female" formControlName="gender">
+                <label class="custom-control-label" for="Female">Female</label>
+            </div>
+            <div *ngIf="gender.invalid || gender.dirty">
+                <small *ngIf="gender.errors?.required" class="text-danger">Gender is required</small>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+</form>
