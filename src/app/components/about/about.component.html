@@ -1,1 +1,25 @@
-<p>about works!</p>
+<div class="container">
+    <div class="row" id="title">
+      <h2>Our Team Members</h2>
+    </div>
+    <div class="row" id="team">
+      <div class="wrapper col-3" *ngFor="let member of team">
+        <div class="card">
+          <img class="card-img-top" src="http://emsegypt.net/wp-content/uploads/2018/02/ITI_Main_page.jpg" alt="Bologna">
+          <div class="card-body text-center">
+            <img class="avatar rounded-circle" [src]=member.pic alt="Bologna">
+            <h5 class="card-title">{{member.Name}}</h5>
+            <h5>{{member.Organization}}</h5>
+            <br>
+            <div class="sm">
+              <a class=" card-subtitle mb-2 text-muted" [href]=member.github><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+              <a class=" card-subtitle mb-2 text-muted" [href]=member.youtube><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a>
+              <a class=" card-subtitle mb-2 text-muted" [href]=member.twitter><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+              <a class=" card-subtitle mb-2 text-muted" [href]=member.facbook><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

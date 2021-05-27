@@ -1,0 +1,47 @@
+.avatar {
+    border: 0.3rem solid rgba(#fff, 0.3);
+    margin-top: -6rem;
+    margin-bottom: 1rem;
+    max-width: 9rem;
+    padding: 8px;
+    background: linear-gradient(130deg, #74b9ff, #e66767);
+    border-radius: 50%;
+    background-size: 200% 200%;
+    animation: animated-gradient 2s linear infinite;
+    box-shadow: 0 -3px 0 3px ivory;
+    box-shadow: 0 0 5 3px gainsboro;
+  }
+  
+  .container{
+    padding: 24px;
+  }
+  #title h2{
+    margin:auto;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    text-align: center;
+  }
+  #team{
+    justify-content: center;
+    padding: 14px;
+    padding-bottom: 50px;
+  }
+  .card-title{
+    color:firebrick
+  }
+  
+  .sm{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .sm a{
+    color: #f2f2f2;
+    width: 56px;
+    font-size: 22px;
+    transition: .3s linear;
+  }
+  
+  .sm a:hover{
+    color: #e66767;
+  }
