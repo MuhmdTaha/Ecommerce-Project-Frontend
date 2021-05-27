@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="row">
+        <div class="col-10 mt-3 offset-1">
+            <div class="pt-2 pb-2">
+                <div class="row">
+                <button type="button" class="btn btn-outline-dark mt-3 col-12 w-100 box-shadow" 
+                routerLink="../products/add" *ngIf="usersService.isLoggedIn() && usersService.currentUser.isAdmin">Add new product</button>
+            </div>
+                <div class="row" *ngFor="let product of productsService.productsList | filter:search">
+                    <div class="card box-shadow mt-2 col-12">
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <h6 style=" border-radius: 10px; background-color: #d10024; color: white;font-size:25px; width: 90px; padding: 10px; margin-top: 7px;"
+                                    *ngIf="product.ratioOfPromotion">{{Math.round(product.ratioOfPromotion*100)}}<fa-icon
+                                        style="color:white;font-size:25px;" [icon]="faPercent"></fa-icon>
+                                </h6>
+                                <img [src]="product.images[0]" class="card-img m-3">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body m-1">
+                                    <a class="card-title h5" routerLink="../products/Details/{{product._id}}">{{product.title}}</a>
+                                    <ul class="card-text mt-3">
+                                        <div *ngFor="let key of GetKeys(product.details)">
+                                            <li *ngIf="product.details[key]">
+                                                <b>{{key}}:</b>
+                                                {{product.details[key]}}
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mt-4 text-center">
+                                    <h5 *ngIf="product.ratioOfPromotion">
+                                        {{product.price - product.price * product.ratioOfPromotion}} EGP
+                                    </h5>
+                                    <h5 [ngStyle]="{'text-decoration': (product.ratioOfPromotion) ? 'line-through' : 'none'}"
+                                        [ngClass]="{'text-danger': product.ratioOfPromotion}">
+                                        {{ product.price }} EGP
+                                    </h5>
+
+
+                                    <button type="button" class="btn btn-primary mt-5 w-100"
+                                        routerLink="../products/Details/{{product._id}}">View Full Details</button>
+                                    <br>
+                                    <div *ngIf="usersService.isLoggedIn() && usersService.currentUser.isAdmin" class="btn-group mt-3 mb-3 w-100" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-outline-dark" data-toggle="modal"
+                                            data-target="#DeleteModal" (click)="DeleteModal(product)">Delete</button>
+                                        <button type="button" class="btn btn-outline-dark"
+                                            (click)="Update(product)">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete item</h5>
+                                <button type="button" class="close" data-dismiss="modal" 
+                                aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this item?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    (click)="Delete(DeleteProductItemID)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
