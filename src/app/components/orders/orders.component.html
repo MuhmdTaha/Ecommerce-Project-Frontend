@@ -1,1 +1,111 @@
-<p>orders works!</p>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-10 mt-3 offset-1">
+        <div class="row">
+        </div>
+        <div class="row">
+          <div class="col-12 mt-3 ml-auto">
+            <div class="table-responsive">
+            <table
+              class="table table-hover table-bordered box-shadow p-3 mb-3 bg-white rounded"
+            >
+              <thead class="thead">
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Date of order</th>
+                  <th scope="col">Total Price</th>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Order Status</th>
+                  <th scope="col">Products List</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of orders; let i = index">
+                  <td > {{ userName[i] }} </td>
+                  <td>{{ order.date.split("T")[0] }}</td>
+                  <td>{{ order.price }}EGP</td>
+                  <td>{{ order._id }}</td>
+                  <td>
+                    <select class="browser-default custom-select" [(ngModel)]="order.status"
+                    (change)="onChange($event.target.value,order)" 
+                    [disabled]="order.status=='cancelled' || order.status=='accepted' || order.status=='rejected'" >
+                      <option value="accepted">Accepted</option>
+                      <option value="pending">Pending</option>
+                      <option value="rejected">Rejected</option>
+                      <option value="cancelled" [hidden]="order.status!='cancelled'">Cancelled</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="button"
+                      (click)="openModal(order._id)"
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                      value="Show Products"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Order {{ tempOrderId }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12 mt-3 ml-auto">
+              <table
+                class="table table-bordered p-3 mb-3 bg-white rounded"
+              >
+                <thead class="thead-white">
+                  <tr>
+                    <th scope="col">Product Title</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of productsArr; let i = index">
+                    <th scope="row">{{ productTitle[i] }}</th>
+                    <td>{{ product.quantity }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
